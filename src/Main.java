@@ -3,17 +3,22 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        List<GoodsBogie> bogies = List.of(
-                new GoodsBogie("Cylindrical", "Petroleum"),
-                new GoodsBogie("Rectangular", "Coal")
+        List<Bogie> bogies = new ArrayList<>();
+
+        // Large dataset
+        for (int i = 0; i < 100000; i++) {
+            bogies.add(new Bogie("Sleeper", i % 100));
+        }
+
+        long loopTime = PerformanceChecker.measureTime(() ->
+                PerformanceChecker.filterWithLoop(bogies)
         );
 
-        boolean isSafe = SafetyChecker.isSafe(bogies);
+        long streamTime = PerformanceChecker.measureTime(() ->
+                PerformanceChecker.filterWithStream(bogies)
+        );
 
-        if (isSafe) {
-            System.out.println("Train is SAFE");
-        } else {
-            System.out.println("Train is NOT SAFE");
-        }
+        System.out.println("Loop Time: " + loopTime + " ns");
+        System.out.println("Stream Time: " + streamTime + " ns");
     }
 }
