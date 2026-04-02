@@ -15,7 +15,7 @@ class Bogie {
     }
 }
 
-public class Main{
+public class UC9 {
     public static void main(String[] args) {
 
         List<Bogie> bogies = new ArrayList<>();
@@ -23,15 +23,21 @@ public class Main{
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("Sleeper", 72)); // duplicate type
+        bogies.add(new Bogie("AC Chair", 56));
 
-        // Stream filtering: capacity > 60
-        List<Bogie> filteredBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // Grouping by bogie type (name)
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
 
-        System.out.println("Filtered Bogies (Capacity > 60):");
-        for (Bogie b : filteredBogies) {
-            b.display();
+        // Display grouped result
+        System.out.println("Grouped Bogies by Type:");
+
+        for (String key : groupedBogies.keySet()) {
+            System.out.println("\nType: " + key);
+            for (Bogie b : groupedBogies.get(key)) {
+                b.display();
+            }
         }
     }
 }
