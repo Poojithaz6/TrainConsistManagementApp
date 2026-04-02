@@ -11,7 +11,7 @@ class Bogie {
     }
 }
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
 
         List<Bogie> bogies = new ArrayList<>();
@@ -27,5 +27,7 @@ public class Main{
                 .reduce(0, Integer::sum);
 
         System.out.println("Total Seating Capacity: " + totalSeats);
+        int total = CapacityCalculator.totalSeats(bogies);
+        System.out.println("Total Seating Capacity: " + total);
     }
 }
