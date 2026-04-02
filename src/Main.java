@@ -1,33 +1,19 @@
 import java.util.*;
-import java.util.stream.*;
-
-class Bogie {
-    String name;
-    int capacity;
-
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-}
 
 public class Main {
     public static void main(String[] args) {
 
-        List<Bogie> bogies = new ArrayList<>();
+        List<GoodsBogie> bogies = List.of(
+                new GoodsBogie("Cylindrical", "Petroleum"),
+                new GoodsBogie("Rectangular", "Coal")
+        );
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Sleeper", 72));
+        boolean isSafe = SafetyChecker.isSafe(bogies);
 
-        // Aggregation using map + reduce
-        int totalSeats = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
-
-        System.out.println("Total Seating Capacity: " + totalSeats);
-        int total = CapacityCalculator.totalSeats(bogies);
-        System.out.println("Total Seating Capacity: " + total);
+        if (isSafe) {
+            System.out.println("Train is SAFE");
+        } else {
+            System.out.println("Train is NOT SAFE");
+        }
     }
 }
