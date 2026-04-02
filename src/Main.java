@@ -1,24 +1,14 @@
-import java.util.*;
-
 public class Main {
     public static void main(String[] args) {
 
-        List<Bogie> bogies = new ArrayList<>();
+        try {
+            PassengerBogie b1 = new PassengerBogie("Sleeper", 72);
+            PassengerBogie b2 = new PassengerBogie("AC Chair", -10); // invalid
 
-        // Large dataset
-        for (int i = 0; i < 100000; i++) {
-            bogies.add(new Bogie("Sleeper", i % 100));
+            System.out.println("Bogies created successfully");
+
+        } catch (InvalidCapacityException e) {
+            System.out.println("Error: " + e.getMessage());
         }
-
-        long loopTime = PerformanceChecker.measureTime(() ->
-                PerformanceChecker.filterWithLoop(bogies)
-        );
-
-        long streamTime = PerformanceChecker.measureTime(() ->
-                PerformanceChecker.filterWithStream(bogies)
-        );
-
-        System.out.println("Loop Time: " + loopTime + " ns");
-        System.out.println("Stream Time: " + streamTime + " ns");
     }
 }
