@@ -2,49 +2,52 @@ import java.util.Arrays;
 
 public class TrainConsistApp {
 
-    // Binary Search Method
-    public static boolean binarySearch(String[] bogieIds, String key) {
+    // Search with validation (Binary Search reused)
+    public static boolean searchBogie(String[] bogieIds, String key) {
 
-        // Handle empty array
-        if (bogieIds.length == 0) {
-            return false;
+        // ✅ Fail-fast validation
+        if (bogieIds == null || bogieIds.length == 0) {
+            throw new IllegalStateException("No bogies available in the train. Cannot perform search.");
         }
 
-        // Ensure sorted (important precondition)
+        // Sort before binary search
         Arrays.sort(bogieIds);
 
         int low = 0;
         int high = bogieIds.length - 1;
 
         while (low <= high) {
-
             int mid = (low + high) / 2;
 
-            int comparison = key.compareTo(bogieIds[mid]);
+            int cmp = key.compareTo(bogieIds[mid]);
 
-            if (comparison == 0) {
-                return true; // found
-            } else if (comparison < 0) {
-                high = mid - 1; // search left
+            if (cmp == 0) {
+                return true;
+            } else if (cmp < 0) {
+                high = mid - 1;
             } else {
-                low = mid + 1; // search right
+                low = mid + 1;
             }
         }
 
-        return false; // not found
+        return false;
     }
 
     public static void main(String[] args) {
 
-        String[] bogieIds = {"BG101","BG205","BG309","BG412","BG550"};
-        String searchKey = "BG309";
+        String[] bogieIds = {"BG101","BG205","BG309"};
 
-        boolean found = binarySearch(bogieIds, searchKey);
+        try {
+            boolean found = searchBogie(bogieIds, "BG205");
 
-        if (found) {
-            System.out.println("Bogie ID " + searchKey + " found.");
-        } else {
-            System.out.println("Bogie ID " + searchKey + " not found.");
+            if (found) {
+                System.out.println("Bogie found.");
+            } else {
+                System.out.println("Bogie not found.");
+            }
+
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
         }
 
         System.out.println("Program continues normally...");
